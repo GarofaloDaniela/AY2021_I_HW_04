@@ -21,7 +21,7 @@
     
     #include <cytypes.h> // Library that contains the functions CY, included the one necessary to define the prototype of the ISR
     #include <UART.h> // Library that contains all the functions associated to the UART component
-    #include <LED_pin.h> // Libraty that contains all the function associated to the LED component
+    #include <EmbLED_pin.h> // Libraty that contains all the function associated to the LED component
     
 #endif
 
