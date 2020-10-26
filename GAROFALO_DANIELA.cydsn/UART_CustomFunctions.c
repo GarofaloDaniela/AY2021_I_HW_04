@@ -23,12 +23,11 @@ int flag_start;
 int flag_stop;
 char received_data;
 
-CY_ISR(custom_UART_ISR)
+CY_ISR_PROTO(custom_UART_ISR)
 {
     if (UART_ReadRxStatus() == UART_RX_STS_FIFO_NOTEMPTY) // Control that a data has been received
     {
         flag_received = 1; // Change the value of the flag according to the receiving of an information
-        LED_Blinking();
     }
 }
 
