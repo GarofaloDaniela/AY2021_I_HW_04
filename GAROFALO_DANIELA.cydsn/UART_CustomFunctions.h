@@ -12,22 +12,40 @@
 
 /*
     File UART_CustomFunctions.h
-    Functions aimed to the inclusion and the definition of all the libraries and variables necessary for the source code
+    Functions aimed to the inclusion and the definition of all the libraries and variables 
+    necessary for the source code
     Author: Daniela Garofalo
 */
     
 #ifndef __UART_CUSTOMFUNCTIONS_H__
     #define __UART_CUSTOMFUNCTIONS_H__
     
-    #include <cytypes.h> // Library that contains the functions CY, included the one necessary to define the prototype of the ISR
-    #include <UART.h> // Library that contains all the functions associated to the UART component
-    #include <EmbLED_pin.h> // Libraty that contains all the function associated to the LED component
+    #define SENDING_BYTES 4 // Information dimension: 2 bytes for each signal
+    #define PACKET_SIZE 1 + SENDING_BYTES + 1 // Overall packet dimension
     
+    #include <cytypes.h> /* Library that contains the functions CY, included the one necessary to 
+    define the prototype of the ISR */
+    #include <UART.h> // Library that contains all the functions associated to the UART component
+    #include <ADC_DelSig.h> /* Libraty that contains all the functions associated to the ADC
+    DelSig component, included the one that is able to convert the sampled value from digit
+    to millivolts (mV) */
+    
+    CY_ISR_PROTO(custom_UART_ISR); // Declaration of the ISR function
+    void UART_ReceivedData(); /* Declaration of the function that controls the value of the 
+    received information */
+    void UART_SendingData(); /* Declaration of the function that sends the sampled values
+    through the serial port implementing the UART protocol */
+    
+    int flag_received;
+    int flag_start;
+    int flag_packet;
+    
+    char received_data;
+    
+    uint8 PacketData[PACKET_SIZE];
+    int32 potentiometer_value;
+    int32 photoresistor_value;
+
 #endif
-
-int flag_received; // Flag variable which is set equal to 1 when a data is received through the serial port
-
-CY_ISR_PROTO(custom_UART_ISR); // Declaration of the ISR function
-void UART_ReceivedData(); // Declaration of the function that controls the value of the received information
 
 /* [] END OF FILE */
