@@ -32,10 +32,8 @@
     
     void LED_Blinking(); /* Declaration of the unction that makes the embedded LED blink at the 
     receiving of a data through the serial port */
-    void LED_Intensity(int photoresistor_threshold); /* Declaration of the function that sets the 
+    void LED_Intensity(int32 photoresistor_threshold); /* Declaration of the function that sets the 
     compare value of the PWM component in order to regulate the LED intensity */
-    
-    int i; // Definition of the index variable that is used only in the LED_Blinking() function
     
     int flag_sampling;
     int flag_received;

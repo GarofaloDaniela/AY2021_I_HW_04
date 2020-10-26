@@ -19,8 +19,9 @@
 
 #include <LED_CustomFunctions.h>
 
-void Led_Blinking() // Function that reports that the communication is happening
+void LED_Blinking() // Function that reports that the communication is happening
 {
+    static int i;
     for(i = 0; i < LED_NUMBER_BLINKING; i++) // Repetition of the blink for three times
     {
         EmbLED_pin_Write(LED_ON);
@@ -32,7 +33,7 @@ void Led_Blinking() // Function that reports that the communication is happening
     has already been processed */
 }
 
-void Led_Intensity(int32 photoresistor_threshold)
+void LED_Intensity(int32 photoresistor_threshold)
 {
     if (flag_sampling == 1) // The signals have been sampled by the ADC
     {
