@@ -22,14 +22,17 @@
     
     #define LED_OFF 0
     
+    #define HEADER 0xA0 // Header of the packet send through the serial port
+    #define TAIL 0xC0 // Tail of the packet send through the serial port
+    #define SENDING_BYTES 4 // Information dimension: 2 bytes for each signal
+    #define PACKET_SIZE 1 + SENDING_BYTES + 1 // Overall packet dimension
+    
     #include <ADC_DelSig.h> /* Libraty that contains all the functions associated to the ADC
     DelSig component */
     #include <Timer_ADC.h> /* Libraty that contains all the functions associated to the timer 
     component */
     #include <PWM.h> /* Libraty that contains all the functions associated to the PWM 
     component */
-    #include <ExtLED_pin.h> /* Libraty that contains all the functions associated to the external
-    LED component */
     #include <UART.h> /* Libraty that contains all the functions associated to the UART
     component */
     
@@ -41,10 +44,12 @@
     int flag_start;
     int flag_received;
     int flag_sampling;
-    int flag_packet;
+    int flag_sending;
     
     int32 photoresistor_value;
     int32 potentiometer_value;
+    
+    uint8 PacketData[PACKET_SIZE];
     
 #endif
 

@@ -24,12 +24,13 @@
 #include <SYSTEM_CustomFunctions.h>
 
 // Definitions related to the transmitted packet
-#define HEADER 0xA0 // Header of the packet send through the serial port
-#define TAIL 0xC0 // Tail of the packet send through the serial port
 #define SENDING_BYTES 4 // Information dimension: 2 bytes for each signal
 #define PACKET_SIZE 1 + SENDING_BYTES + 1 // Overall packet dimension
 
-#define PHOTORESISTOR_THRESHOLD 0
+#define PHOTORESISTOR_THRESHOLD 65535
+
+#define LED_ON 1
+#define LED_OFF 0
 
 extern uint8 PacketData[PACKET_SIZE]; 
 
@@ -37,7 +38,7 @@ extern uint8 PacketData[PACKET_SIZE];
 extern int flag_start;
 extern int flag_received;
 extern int flag_sampling;
-extern int flag_packet;
+extern int flag_sending;
 
 // Declaration of the variables containing the sampled values
 extern int32 potentiometer_value;
@@ -60,19 +61,15 @@ int main(void)
         /* Place your application code here. */
         UART_ReceivedData(); /* Function that changes the value of the variable flag_start
         according to the character inserted by the user */
-        LED_Blinking(); /* Function that made the LED blinking in order to report the correct
-        transmission of the data to the kit */
         if (flag_start == 1)
         {
-            Timer_ADC_Start(); /* Starting the counting in order to generate the interrupts
-            that are devoted to the sampling of the input signals */
-            LED_Intensity(PHOTORESISTOR_THRESHOLD); /* Function that switches ON the LED
-            according to the value of the potentiometer only if the photoresistor value is 
-            lower than the given threhsold */
+//            LED_Intensity(PHOTORESISTOR_THRESHOLD); /* Function that switches ON the LED
+//            according to the value of the potentiometer only if the photoresistor value is 
+//            lower than the given threhsold */
             UART_SendingData(); /* Function that sends the information through the serial port
             in order to plot both the analog signal for diagnostic purposes */
-        } else {
-            SYSTEM_Disabling();
+//        } else {
+//            SYSTEM_Disabling();
         }
     }
 }

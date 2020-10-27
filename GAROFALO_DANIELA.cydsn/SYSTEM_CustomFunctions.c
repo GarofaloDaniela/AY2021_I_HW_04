@@ -29,11 +29,14 @@ void SYSTEM_Initialisation()
     flag_start = 0;
     flag_received = 0;
     flag_sampling = 0;
-    flag_packet = 0;
+    flag_sending = 0;
     potentiometer_value = 0;
     photoresistor_value = 65535; /* Initialisation of the value associated to the photoresistor
     at the maximum number possible in order to avoid the switchin ON of the LED because it is
     surely grater or at least equal to the threhsold set by the programmer */
+    PacketData[0] = HEADER;
+    PacketData[PACKET_SIZE - 1] = TAIL;
+    // Initialisation of the bytes that represent the beginning and the end of each packet
 }
 
 void SYSTEM_Disabling()
@@ -41,7 +44,6 @@ void SYSTEM_Disabling()
     ADC_DelSig_StopConvert();
     Timer_ADC_Stop();
     PWM_Stop();
-    ExtLED_pin_Write(LED_OFF); // Switching OFF the LED when the system is disabled
 }
 
 /* [] END OF FILE */

@@ -19,20 +19,6 @@
 
 #include <LED_CustomFunctions.h>
 
-void LED_Blinking() // Function that reports that the communication is happening
-{
-    static int i;
-    for(i = 0; i < LED_NUMBER_BLINKING; i++) // Repetition of the blink for three times
-    {
-        EmbLED_pin_Write(LED_ON);
-        CyDelay(LED_DELAY);
-        EmbLED_pin_Write(LED_OFF);
-        CyDelay(LED_DELAY);
-    }
-    flag_received = 0; /* Initialisation of the flag variable because the data received 
-    has already been processed */
-}
-
 void LED_Intensity(int32 photoresistor_threshold)
 {
     if (flag_sampling == 1) // The signals have been sampled by the ADC
@@ -61,6 +47,8 @@ void LED_Intensity(int32 photoresistor_threshold)
             PWM_WriteCompare(potentiometer_value); /* Setting the value of the compare in order
             to regulate the intensity of the LED according to the acquired value */
             PWM_Start(); // Starting the PWM component in order to switch ON the LED
+            flag_sending = 1;
+            flag_sampling = 0;
         }
     }
 }

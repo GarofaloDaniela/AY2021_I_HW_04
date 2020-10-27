@@ -20,15 +20,22 @@
 #ifndef __UART_CUSTOMFUNCTIONS_H__
     #define __UART_CUSTOMFUNCTIONS_H__
     
+    #define LED_ON 1
+    #define LED_OFF 0
+    
     #define SENDING_BYTES 4 // Information dimension: 2 bytes for each signal
     #define PACKET_SIZE 1 + SENDING_BYTES + 1 // Overall packet dimension
     
     #include <cytypes.h> /* Library that contains the functions CY, included the one necessary to 
     define the prototype of the ISR */
     #include <UART.h> // Library that contains all the functions associated to the UART component
-    #include <ADC_DelSig.h> /* Libraty that contains all the functions associated to the ADC
-    DelSig component, included the one that is able to convert the sampled value from digit
-    to millivolts (mV) */
+    #include <Timer_ADC.h> /* Library that contains all the functions associated to the timer
+    component, included the one that starts the counting in order to generate the interrupts that
+    are devoted to the sampling of the signals */
+    #include <EmbLED_pin.h> /* Library that contains all the functions associated to the embedded
+    LED of the kit, included the one that switches ON and OFF the LED */
+    #include <ADC_DelSig.h> /* Library that contains all the functions associated to the ADC component,
+    included the one that allows the conversion of the sampled values from digit to millivolts (mV) */
     
     CY_ISR_PROTO(custom_UART_ISR); // Declaration of the ISR function
     void UART_ReceivedData(); /* Declaration of the function that controls the value of the 
@@ -38,11 +45,14 @@
     
     int flag_received;
     int flag_start;
-    int flag_packet;
+    int flag_sending;
+    
+    int flag_sampling;
     
     char received_data;
     
     uint8 PacketData[PACKET_SIZE];
+    
     int32 potentiometer_value;
     int32 photoresistor_value;
 
