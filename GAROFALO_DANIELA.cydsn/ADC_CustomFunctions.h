@@ -25,15 +25,11 @@
     
     #include <cytypes.h> /* Library that contains the CY functions, included the one necessary 
     for the definition of the ISR prototype */
-    #include <ADC_DelSig.h> /* Library that contains all the functions related to the ADC 
-    component */
-    #include <Timer_ADC.h> /* Library that contains all the functions related to the timer 
-    component */
-    #include <AMux.h> // Library that contains all the functions related to the AMux component
+    #include <project.h> // Library that contains all the functions related to the components of the project
 
     CY_ISR_PROTO(custom_ADC_ISR); // Declaration of the ISR function
     
-    int flag_sampling;
+    volatile int flag_sampling;
     
     int32 potentiometer_value;
     int32 photoresistor_value;

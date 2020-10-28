@@ -20,13 +20,12 @@
 #ifndef __LED_CUSTOMFUNCTIONS_H__
     #define __LED_CUSTOMFUNCTIONS_H__
     
-    #include <PWM.h> // Library that contains all the functions related to the PWM
+    #include <project.h> // Library that contains all the functions related to components in the project
+    #include <UART_CustomFunctions.h> /* Library that contains the declaration of all the
+    functions related to the UART component */
     
     void LED_Intensity(int32 photoresistor_threshold); /* Declaration of the function that sets the 
     compare value of the PWM component in order to regulate the LED intensity */
-    
-    int flag_sampling;
-    int flag_sending;
     
     int32 photoresistor_value;
     int32 potentiometer_value;

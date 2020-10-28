@@ -23,15 +23,15 @@ CY_ISR(custom_ADC_ISR)
 {
     Timer_ADC_ReadStatusRegister(); /* Function that allows to generate again an interrupt when the timer reaches 
     the end of the coutings */
-//    AMux_Select(POTENTIOMETR_CH); // Selection of the channel of the AMux related to the potentiometer 
-//    ADC_DelSig_StartConvert(); // Starting the conversion of the first signal
-//    potentiometer_value = ADC_DelSig_Read32(); // Sampling the input signal
-//    ADC_DelSig_StopConvert(); /* Stopping and restarting the conversion between the acquisition of signals coming from 
-//    different sources to avoid the contamination of the sampled values */
-    AMux_Select(PHOTORESISTOR_CH); // Selection of the channel of the AMux related to the photoresistor
-    ADC_DelSig_StartConvert(); // Starting the conversion of second signal
+    
+    // Sampling of the first analog signal 
+    AMux_FastSelect(POTENTIOMETR_CH); // Selection of the channel of the AMux related to the potentiometer 
+    potentiometer_value = ADC_DelSig_Read32(); // Sampling the input signal
+    
+    // Sampling of the second analog signal 
+    AMux_FastSelect(PHOTORESISTOR_CH); // Selection of the channel of the AMux related to the photoresistor
     photoresistor_value = ADC_DelSig_Read32(); // Sampling the input signal
-    ADC_DelSig_StopConvert(); // Stopping the conversion of the second signal
+    
     flag_sampling = 1; // Updating of the flag variable related to the sampling
 }
 

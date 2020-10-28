@@ -28,14 +28,7 @@
     
     #include <cytypes.h> /* Library that contains the functions CY, included the one necessary to 
     define the prototype of the ISR */
-    #include <UART.h> // Library that contains all the functions associated to the UART component
-    #include <Timer_ADC.h> /* Library that contains all the functions associated to the timer
-    component, included the one that starts the counting in order to generate the interrupts that
-    are devoted to the sampling of the signals */
-    #include <EmbLED_pin.h> /* Library that contains all the functions associated to the embedded
-    LED of the kit, included the one that switches ON and OFF the LED */
-    #include <ADC_DelSig.h> /* Library that contains all the functions associated to the ADC component,
-    included the one that allows the conversion of the sampled values from digit to millivolts (mV) */
+    #include <project.h> // Library that contains all the functions associated to the components of the project
     
     CY_ISR_PROTO(custom_UART_ISR); // Declaration of the ISR function
     void UART_ReceivedData(); /* Declaration of the function that controls the value of the 
@@ -43,11 +36,8 @@
     void UART_SendingData(); /* Declaration of the function that sends the sampled values
     through the serial port implementing the UART protocol */
     
-    int flag_received;
-    int flag_start;
-    int flag_sending;
-    
-    int flag_sampling;
+    volatile int flag_received;
+    volatile int flag_start;
     
     char received_data;
     

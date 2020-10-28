@@ -21,36 +21,27 @@
 
 void LED_Intensity(int32 photoresistor_threshold)
 {
-    if (flag_sampling == 1) // The signals have been sampled by the ADC
+    // Controlling the consistency of the value acquired from the photoresistor
+    if (photoresistor_value > 65535)    photoresistor_value = 65535;
+    if (photoresistor_value < 0)        photoresistor_value = 0;
+        
+    // Controlling the consistency of the value acquired from the potentiometer
+    if (potentiometer_value > 65535)    potentiometer_value = 65535;
+    if (potentiometer_value < 0)        potentiometer_value = 0;
+        
+    /* The value of the photoresistor is lower than the threshold set by the programmer, so 
+    the LED must switch ON */
+    if (photoresistor_value < photoresistor_threshold) 
     {
-        if (photoresistor_value > 65535)
-        {
-            photoresistor_value = 65535;
-        } else if (photoresistor_value < 0)
-        {
-            photoresistor_value = 0;
-        }
-        /* Controlling the value of photoresistor_value variable in order to cope with some 
-        eventual errors */
-        if (photoresistor_value < photoresistor_threshold) /* The value of the photoresistor
-        is lower than the threshold set by the programmer, so the LED must switch ON */
-        {
-            if (potentiometer_value > 65535)
-            {
-                potentiometer_value = 65535;
-            } else if (potentiometer_value < 0)
-            {
-                potentiometer_value = 0;
-            }
-            /* Controlling the value of potentiometer_value variable in order to cope with some 
-            eventual errors */
-            PWM_WriteCompare(potentiometer_value); /* Setting the value of the compare in order
-            to regulate the intensity of the LED according to the acquired value */
-            PWM_Start(); // Starting the PWM component in order to switch ON the LED
-            flag_sending = 1;
-            flag_sampling = 0;
-        }
+        PWM_WriteCompare(potentiometer_value); /* Setting the value of the compare in order
+        to regulate the intensity of the LED according to the acquired value */
+        PWM_Start(); // Starting the PWM component in order to switch ON the LED
+    } else {
+        PWM_Stop(); // Stopping the PWM component in order to switch OFF the LED
     }
+        
+    UART_SendingData(); /* Function that sends the information through the serial port in 
+    order to plot both the analog signal for diagnostic purposes */
 }
 
 /* [] END OF FILE */
